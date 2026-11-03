@@ -1,0 +1,49 @@
+erDiagram
+    estudiante ||--o{ intento : realiza
+    concurso ||--o{ intento : tiene
+    concurso ||--o{ pregunta : contiene
+    pregunta ||--o{ opcion : ofrece
+    intento ||--o{ respuesta : registra
+    pregunta ||--o{ respuesta : "es respondida en"
+    opcion |o--o{ respuesta : "es elegida en"
+
+    estudiante {
+        int id_estudiante PK
+        string nombre
+        string grado
+    }
+    concurso {
+        int id_concurso PK
+        string titulo
+        string area
+        text texto_base
+        string estado
+    }
+    pregunta {
+        int id_pregunta PK
+        int id_concurso FK
+        text enunciado
+        int puntaje
+    }
+    opcion {
+        int id_opcion PK
+        int id_pregunta FK
+        string texto
+        boolean es_correcta
+    }
+    intento {
+        int id_intento PK
+        int id_estudiante FK
+        int id_concurso FK
+        datetime fecha_inicio
+        datetime fecha_fin
+        int puntaje_total
+    }
+    respuesta {
+        int id_respuesta PK
+        int id_intento FK
+        int id_pregunta FK
+        int id_opcion FK
+        boolean es_correcta
+        int puntaje_obtenido
+    }

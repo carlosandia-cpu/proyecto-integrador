@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SmartIA - Prototipo HU-4: Concursos</title>
+<style>
+  :root {
+    --tinta: #1d2b4f;
+    --papel: #f7f8fb;
+    --linea: #c9d0e0;
+    --marca: #f2c14e;
+    --ok: #2f8f5b;
+    --suave: #e9edf6;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 32px 20px 48px;
+    font-family: "Segoe UI", Verdana, Arial, sans-serif;
+    background: #dfe4ef; color: var(--tinta);
+  }
+  header { max-width: 1180px; margin: 0 auto 28px; }
+  h1 { margin: 0 0 6px; font-size: 26px; }
+  header p { margin: 0; color: #4a5778; font-size: 15px; }
+  .fila {
+    max-width: 1180px; margin: 0 auto;
+    display: flex; flex-wrap: wrap; gap: 28px; justify-content: center;
+  }
+  figure { margin: 0; width: 340px; }
+  figcaption { margin: 0 0 10px; font-weight: 600; font-size: 15px; }
+  figcaption span { display: block; font-weight: 400; font-size: 13px; color: #4a5778; }
+  .pantalla {
+    background: var(--papel); border: 2px solid var(--tinta); border-radius: 22px;
+    min-height: 560px; padding: 22px 20px; display: flex; flex-direction: column; gap: 14px;
+  }
+  .barra { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #4a5778; }
+  .logo { font-weight: 700; color: var(--tinta); font-size: 16px; }
+  h2 { margin: 4px 0 0; font-size: 20px; }
+  .tarjeta {
+    border: 1.5px solid var(--linea); border-radius: 12px; background: #fff;
+    padding: 14px; display: flex; flex-direction: column; gap: 8px;
+  }
+  .tarjeta b { font-size: 16px; }
+  .area { font-size: 12px; color: #4a5778; }
+  .boton {
+    border: 2px solid var(--tinta); background: var(--tinta); color: #fff;
+    border-radius: 10px; padding: 10px 14px; font-size: 15px; font-weight: 600;
+    text-align: center; font-family: inherit;
+  }
+  .boton.claro { background: #fff; color: var(--tinta); }
+  .progreso { height: 8px; background: var(--suave); border-radius: 99px; overflow: hidden; }
+  .progreso i { display: block; height: 100%; width: 50%; background: var(--tinta); }
+  .lectura {
+    background: var(--suave); border-radius: 10px; padding: 12px;
+    font-size: 13px; line-height: 1.5; color: #35426a;
+  }
+  .enunciado { font-size: 17px; font-weight: 600; line-height: 1.35; }
+  .opcion {
+    border: 1.5px solid var(--linea); background: #fff; border-radius: 10px;
+    padding: 11px 12px; font-size: 15px; display: flex; gap: 10px; align-items: center;
+  }
+  .opcion::before {
+    content: ""; width: 16px; height: 16px; border: 2px solid var(--tinta);
+    border-radius: 50%; flex: none;
+  }
+  .opcion.elegida { border-color: var(--tinta); background: #fff6dc; }
+  .opcion.elegida::before { background: var(--marca); }
+  .espacio { flex: 1; }
+  .resultado { text-align: center; padding: 18px 8px; }
+  .puntaje { font-size: 64px; font-weight: 700; line-height: 1; }
+  .puntaje small { font-size: 26px; color: #4a5778; }
+  .detalle { display: flex; gap: 10px; }
+  .detalle div {
+    flex: 1; border: 1.5px solid var(--linea); border-radius: 10px; background: #fff;
+    padding: 10px; text-align: center; font-size: 13px;
+  }
+  .detalle strong { display: block; font-size: 22px; }
+  .detalle .bien strong { color: var(--ok); }
+  nota { display: block; }
+  footer { max-width: 1180px; margin: 26px auto 0; font-size: 13px; color: #4a5778; text-align: center; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>SmartIA: concursos de lectura y matemáticas</h1>
+  <p>Prototipo de HU-4 con las 3 pantallas del concurso. Los datos de ejemplo salen de la base smartia.</p>
+</header>
+
+<main class="fila">
+
+  <figure>
+    <figcaption>Pantalla 1: Elegir concurso
+      <span>Muestra los concursos activos (acción concursos)</span></figcaption>
+    <div class="pantalla">
+      <div class="barra"><span class="logo">SmartIA</span><span>Estudiante de prueba</span></div>
+      <h2>Elige tu concurso</h2>
+      <div class="tarjeta">
+        <b>Concurso de lectura 1</b>
+        <span class="area">Lectura · 2 preguntas</span>
+        <div class="boton">Iniciar concurso</div>
+      </div>
+      <div class="tarjeta">
+        <b>Concurso de matemáticas 1</b>
+        <span class="area">Matemáticas · 2 preguntas</span>
+        <div class="boton">Iniciar concurso</div>
+      </div>
+      <div class="espacio"></div>
+      <div class="boton claro">Ver mis resultados</div>
+    </div>
+  </figure>
+
+  <figure>
+    <figcaption>Pantalla 2: Responder pregunta
+      <span>Una pregunta a la vez (acciones preguntas y responder)</span></figcaption>
+    <div class="pantalla">
+      <div class="barra"><span class="logo">Concurso de lectura 1</span><span>Pregunta 1 de 2</span></div>
+      <div class="progreso"><i></i></div>
+      <div class="lectura">Aquí va un texto breve de lectura. Solo aparece en los concursos de lectura; en matemáticas este bloque no se muestra.</div>
+      <div class="enunciado">¿Cuál es la idea principal del texto?</div>
+      <div class="opcion">Opción A</div>
+      <div class="opcion elegida">Opción B</div>
+      <div class="opcion">Opción C</div>
+      <div class="espacio"></div>
+      <div class="boton">Siguiente pregunta</div>
+    </div>
+  </figure>
+
+  <figure>
+    <figcaption>Pantalla 3: Resultado
+      <span>Puntaje final del intento (acciones finalizar y resultado)</span></figcaption>
+    <div class="pantalla">
+      <div class="barra"><span class="logo">Concurso terminado</span><span>Estudiante de prueba</span></div>
+      <h2>Tu resultado</h2>
+      <div class="resultado">
+        <div class="puntaje">2<small> / 2</small></div>
+        <p>puntos en Concurso de matemáticas 1</p>
+      </div>
+      <div class="detalle">
+        <div class="bien"><strong>2</strong>correctas</div>
+        <div><strong>0</strong>incorrectas</div>
+      </div>
+      <div class="espacio"></div>
+      <div class="boton">Volver a los concursos</div>
+      <div class="boton claro">Ver mi historial</div>
+    </div>
+  </figure>
+
+</main>
+
+<footer>Prototipo de baja fidelidad. El temporizador (HU-5) y la penalización por cambio de pestaña (HU-6) se agregan en sus historias.</footer>
+
+</body>
+</html>
