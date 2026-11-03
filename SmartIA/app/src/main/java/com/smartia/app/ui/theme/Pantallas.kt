@@ -93,7 +93,9 @@ val EsquemaSmartia = lightColorScheme(
     error = Rojo
 )
 
-private fun nombreArea(area: String) = if (area == "matematicas") "Matemáticas" else "Lectura"
+// El servidor manda el area en mayusculas (LECTURA / MATEMATICAS)
+private fun nombreArea(area: String) =
+    if (area.equals("matematicas", ignoreCase = true)) "Matemáticas" else "Lectura"
 
 @Composable
 fun SmartiaApp(vm: ConcursoViewModel = viewModel()) {
@@ -106,7 +108,12 @@ fun SmartiaApp(vm: ConcursoViewModel = viewModel()) {
         when (estado.pantalla) {
             Pantalla.CONCURSOS -> ConcursosScreen(estado, vm::iniciar, vm::cargarConcursos)
             Pantalla.PREGUNTA -> PreguntaScreen(estado, vm::elegirOpcion, vm::responder)
-            Pantalla.RESULTADO -> ResultadoScreen(estado, vm::cargarResultado, vm::volverAlInicio)
+            Pantalla.RESULTADO -> ResultadoScreen(
+                estado,
+                vm::cargarResultado,
+                vm::cargarFeedback,
+                vm::volverAlInicio
+            )
         }
     }
 }
@@ -206,7 +213,7 @@ private fun Etiqueta(texto: String, color: Color) {
 
 @Composable
 private fun TarjetaConcurso(c: ConcursoResumen, habilitado: Boolean, onClick: () -> Unit) {
-    val esMate = c.area == "matematicas"
+    val esMate = c.area.equals("matematicas", ignoreCase = true)
     val color = if (esMate) NaranjaMate else AzulLectura
     val degradado = Brush.linearGradient(
         if (esMate) listOf(Color(0xFFE8590C), Color(0xFFFFB347))
@@ -436,9 +443,14 @@ private fun OpcionItem(letra: String, texto: String, elegida: Boolean, onClick: 
 
 /* ---------- Pantalla 3: resultado de la participación ---------- */
 @Composable
-fun ResultadoScreen(estado: EstadoUi, onReintentar: () -> Unit, onVolver: () -> Unit) {
+fun ResultadoScreen(
+    estado: EstadoUi,
+    onReintentar: () -> Unit,
+    onReintentarFeedback: () -> Unit,
+    onVolver: () -> Unit
+) {
     val r = estado.resultado
-    val maximo = estado.concurso?.preguntas?.sumOf { it.puntaje } ?: 0
+    val maximo = r?.puntajeMaximo ?: 0
     val porcentaje = if (r != null && maximo > 0) r.puntajeTotal * 100 / maximo else 0
 
     val (emoji, titulo, detalle) = when {
@@ -466,7 +478,7 @@ fun ResultadoScreen(estado: EstadoUi, onReintentar: () -> Unit, onVolver: () -> 
             Text("Concurso terminado", color = Color.White.copy(alpha = 0.8f), fontSize = 14.sp)
             Spacer(Modifier.height(4.dp))
             Text(
-                r?.titulo ?: "Tu resultado",
+                r?.concurso ?: "Tu resultado",
                 color = Color.White,
                 fontSize = 22.sp,
                 fontWeight = FontWeight.Bold
@@ -537,9 +549,12 @@ fun ResultadoScreen(estado: EstadoUi, onReintentar: () -> Unit, onVolver: () -> 
                 )
                 Spacer(Modifier.height(22.dp))
                 Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(14.dp)) {
-                    CajaDato("✓", r.correctas.toString(), "Correctas", Verde)
-                    CajaDato("✗", r.incorrectas.toString(), "Incorrectas", Rojo)
+                    CajaDato("✓", r.aciertos.toString(), "Correctas", Verde)
+                    CajaDato("✗", (r.totalPreguntas - r.aciertos).toString(), "Incorrectas", Rojo)
                 }
+
+                Spacer(Modifier.height(18.dp))
+                TarjetaFeedback(estado, onReintentarFeedback)
             }
 
             estado.error?.let {
@@ -562,6 +577,34 @@ fun ResultadoScreen(estado: EstadoUi, onReintentar: () -> Unit, onVolver: () -> 
                     .fillMaxWidth()
                     .height(54.dp)
             ) { Text("Volver a los concursos", fontWeight = FontWeight.Bold, fontSize = 16.sp) }
+        }
+    }
+}
+
+// Tarjeta con la retroalimentacion generada por la IA
+@Composable
+private fun TarjetaFeedback(estado: EstadoUi, onReintentar: () -> Unit) {
+    val texto = estado.feedback
+    val fallo = estado.errorFeedback
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(20.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
+    ) {
+        Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Text("🤖  Retroalimentación de SmartIA", fontWeight = FontWeight.Bold)
+            when {
+                estado.cargandoFeedback -> Row(verticalAlignment = Alignment.CenterVertically) {
+                    CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp)
+                    Spacer(Modifier.width(10.dp))
+                    Text("Analizando tus respuestas…")
+                }
+                texto != null -> Text(texto, lineHeight = 22.sp)
+                fallo != null -> {
+                    Text(fallo, color = MaterialTheme.colorScheme.error)
+                    OutlinedButton(onClick = onReintentar) { Text("Reintentar") }
+                }
+            }
         }
     }
 }
