@@ -1,0 +1,405 @@
+
+:root {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #202a44;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* LOGIN */
+
+.login-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #172554, #3754bb);
+  display: grid;
+  place-items: center;
+  padding: 30px 16px;
+}
+
+.login-panel {
+  width: 100%;
+  max-width: 430px;
+}
+
+.marca {
+  text-align: center;
+  color: white;
+  margin-bottom: 25px;
+}
+
+.marca-icono {
+  font-size: 48px;
+}
+
+.marca h1 {
+  font-size: 36px;
+  margin: 12px 0;
+}
+
+.marca p {
+  color: #dce5ff;
+}
+
+.login-card {
+  background: white;
+  border-radius: 18px;
+  padding: 32px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.2);
+}
+
+.login-card h2 {
+  margin: 0 0 8px;
+}
+
+.login-card > p {
+  color: #64748b;
+  margin-bottom: 25px;
+}
+
+.login-card label {
+  display: block;
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.login-card input {
+  width: 100%;
+  padding: 13px;
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+  margin-bottom: 20px;
+  outline: none;
+}
+
+.login-card input:focus {
+  border-color: #4566db;
+}
+
+.boton-principal {
+  width: 100%;
+  background: #3856c8;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 9px;
+  font-weight: bold;
+}
+
+.boton-principal:hover {
+  background: #2944a8;
+}
+
+.boton-principal:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.login-card .nota-login {
+  font-size: 12px;
+  text-align: center;
+  margin: 18px 0 0;
+}
+
+.mensaje-error {
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+/* DASHBOARD */
+
+.dashboard {
+  display: flex;
+  min-height: 100vh;
+  background: #f3f6fc;
+}
+
+.sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  background: #172554;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 25px 18px;
+}
+
+.sidebar-marca {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 50px;
+}
+
+.sidebar-menu {
+  flex: 1;
+}
+
+.menu-activo {
+  background: #314997;
+  padding: 15px;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.menu-info {
+  margin: 18px 15px;
+  color: #cbd5e1;
+  font-size: 14px;
+}
+
+.sidebar-pie {
+  color: #b3c3f8;
+  font-size: 12px;
+}
+
+.panel-principal {
+  flex: 1;
+  min-width: 0;
+}
+
+.barra-superior {
+  height: 75px;
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 35px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.etiqueta-rol {
+  margin-left: 14px;
+  background: #e6edff;
+  color: #2444a4;
+  padding: 7px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.boton-salir {
+  background: white;
+  color: #b42318;
+  border: 1px solid #fecaca;
+  padding: 10px 15px;
+  border-radius: 8px;
+}
+
+.boton-salir:hover {
+  background: #fff1f2;
+}
+
+.panel-contenido {
+  max-width: 1250px;
+  margin: auto;
+  padding: 32px;
+}
+
+.bienvenida {
+  background: linear-gradient(120deg, #314aab, #647bea);
+  border-radius: 18px;
+  padding: 35px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bienvenida span {
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: #dde6ff;
+}
+
+.bienvenida h1 {
+  margin: 12px 0;
+  font-size: 30px;
+}
+
+.bienvenida p {
+  margin: 0;
+  color: #e2e8ff;
+}
+
+.bienvenida-icono {
+  font-size: 65px;
+}
+
+.seccion {
+  margin-top: 35px;
+}
+
+.seccion h2 {
+  margin-bottom: 8px;
+  font-size: 23px;
+}
+
+.seccion-descripcion {
+  color: #64748b;
+  margin-bottom: 22px;
+}
+
+.perfil-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: white;
+  border-radius: 13px;
+  padding: 22px;
+  border: 1px solid #e3e8f2;
+}
+
+.avatar {
+  width: 55px;
+  height: 55px;
+  background: #dce6ff;
+  color: #263e9a;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.perfil-card p {
+  color: #64748b;
+  margin: 7px 0;
+  overflow-wrap: anywhere;
+}
+
+.perfil-rol {
+  font-size: 11px;
+  color: #3156bb;
+  font-weight: bold;
+}
+
+.modulos-grid,
+.areas-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(220px, 1fr)
+  );
+  gap: 18px;
+}
+
+.modulo-card,
+.area-card {
+  background: white;
+  border: 1px solid #e3e8f2;
+  border-radius: 14px;
+  padding: 23px;
+  box-shadow: 0 4px 14px rgba(20, 35, 80, 0.04);
+}
+
+.modulo-icono {
+  font-size: 36px;
+}
+
+.modulo-card h3,
+.area-card h3 {
+  color: #233c90;
+  margin: 15px 0 8px;
+}
+
+.modulo-card p,
+.area-card p {
+  color: #64748b;
+  line-height: 1.5;
+}
+
+.estado-modulo {
+  display: inline-block;
+  margin-top: 15px;
+  border-radius: 20px;
+  background: #fff3d6;
+  color: #936100;
+  padding: 7px 12px;
+  font-size: 12px;
+}
+
+.area-card span {
+  display: inline-block;
+  margin-top: 10px;
+  background: #e5f7ed;
+  color: #147a49;
+  padding: 7px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.boton-abrir-modulo {
+  display: block;
+  margin-top: 15px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  background: #3856c8;
+  color: white;
+  cursor: pointer;
+}
+
+.boton-abrir-modulo:hover {
+  background: #2944a8;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 750px) {
+  .dashboard {
+    display: block;
+  }
+
+  .sidebar {
+    width: 100%;
+    padding: 18px;
+  }
+
+  .sidebar-marca {
+    margin-bottom: 0;
+  }
+
+  .sidebar-menu,
+  .sidebar-pie {
+    display: none;
+  }
+
+  .barra-superior {
+    padding: 15px;
+    gap: 12px;
+  }
+
+  .panel-contenido {
+    padding: 18px;
+  }
+
+  .bienvenida {
+    padding: 25px;
+  }
+
+  .bienvenida-icono {
+    display: none;
+  }
+
+  .modulos-grid,
+  .areas-grid {
+    grid-template-columns: 1fr;
+  }
+}
