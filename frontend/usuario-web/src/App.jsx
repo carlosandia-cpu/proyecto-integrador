@@ -8,7 +8,6 @@ const API = "http://localhost:8081";
 
 // Cuenta de demostración utilizada en nuestras pruebas.
 // Pendiente: obtener este ID automáticamente del backend.
-const ID_ESTUDIANTE_DEMO = 1;
 
 const modulos = [
   {
@@ -202,7 +201,7 @@ function App() {
     if (vista === "CONCURSOS") {
       return (
         <Concursos
-          idEstudiante={ID_ESTUDIANTE_DEMO}
+          idEstudiante={usuario.idEstudiante}
           autorizacion={autorizacion}
           volver={() => setVista(null)}
         />
@@ -214,9 +213,9 @@ function App() {
       return (
         <Actividades
           area={vista}
-          idEstudiante={ID_ESTUDIANTE_DEMO}
+          idEstudiante={usuario.idEstudiante}
           autorizacion={autorizacion}
-          volver={() => setVista(null)}
+         volver={() => setVista(null)}
         />
       );
     }

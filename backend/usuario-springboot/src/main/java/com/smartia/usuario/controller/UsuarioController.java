@@ -21,6 +21,7 @@ public class UsuarioController {
 
     public record PerfilDTO(
         Long idUsuario,
+        Long idEstudiante,
         String nombre,
         String apellidos,
         String correo,
@@ -32,6 +33,7 @@ public class UsuarioController {
 
         if (authentication == null ||
             !authentication.isAuthenticated()) {
+
             throw new ResponseStatusException(
                 HttpStatus.UNAUTHORIZED,
                 "No autenticado"
@@ -39,18 +41,36 @@ public class UsuarioController {
         }
 
         List<PerfilDTO> usuarios = jdbc.query("""
-            SELECT id_usuario, nombre, apellidos,
-                   correo, rol
-            FROM usuarios
-            WHERE correo = ?
+            SELECT
+                u.id_usuario,
+                e.id_estudiante,
+                u.nombre,
+                u.apellidos,
+                u.correo,
+                u.rol
+            FROM usuarios u
+            LEFT JOIN estudiantes e
+                ON e.id_usuario = u.id_usuario
+            WHERE u.correo = ?
+              AND u.activo = TRUE
             """,
-            (rs, fila) -> new PerfilDTO(
-                rs.getLong("id_usuario"),
-                rs.getString("nombre"),
-                rs.getString("apellidos"),
-                rs.getString("correo"),
-                rs.getString("rol")
-            ),
+            (rs, fila) -> {
+
+                Long idEstudiante =
+                    rs.getObject(
+                        "id_estudiante",
+                        Long.class
+                    );
+
+                return new PerfilDTO(
+                    rs.getLong("id_usuario"),
+                    idEstudiante,
+                    rs.getString("nombre"),
+                    rs.getString("apellidos"),
+                    rs.getString("correo"),
+                    rs.getString("rol")
+                );
+            },
             authentication.getName()
         );
 
